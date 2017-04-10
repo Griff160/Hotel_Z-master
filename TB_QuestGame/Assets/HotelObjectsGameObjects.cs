@@ -20,9 +20,9 @@ namespace TB_QuestGame
             new HeroObject
             {
                 Id = 1,
-                Name = "Bag of Gold",
+                Name = "Bleach",
                 RoomLocationID = 2,
-                Description = "A small leather pouch filled with 9 gold coins.",
+                Description = "Common household bleach. This could purify drinking water.",
                 Type = HeroObjectType.Treasure,
                 Value = 45,
                 CanInventory = true,
@@ -33,9 +33,9 @@ namespace TB_QuestGame
             new HeroObject
             {
                 Id = 2,
-                Name = "Ruby of Saron",
+                Name = "Towel",
                 RoomLocationID = 3,
-                Description = "A bright red jewel, roughly the size of a robin's egg.",
+                Description = "Always know where your towel is.",
                 Type = HeroObjectType.Treasure,
                 Value = 45,
                 CanInventory = true,
@@ -46,26 +46,22 @@ namespace TB_QuestGame
             new HeroObject
             {
                 Id = 3,
-                Name = "Rotogenic Medicine",
+                Name = "Hammer",
                 RoomLocationID = 3,
-                Description = "A wooden box containing a small vial filled with a blue liquid.",
-                Type = HeroObjectType.Medicine,
+                Description = "A claw hammer.",
+                Type = HeroObjectType.Weapon,
                 Value = 45,
-                CanInventory = false,
-                IsConsumable = true,
+                CanInventory = true,
+                IsConsumable = false,
                 IsVisible = true
             },
 
             new HeroObject
             {
                 Id = 4,
-                Name = "Norlan Document ND-3075",
+                Name = "Lobby Door Code",
                 RoomLocationID = 3,
-                Description =
-                    "Memo: Origin Errata" + "/n" +
-                    "Universal Date: 378598" + "/n" +
-                    "/n" +
-                    "It appears a potential origin for the technology is based on Plenatia 5 in the Star Reach Galaxy.",
+                Description = "445552",                    
                 Type = HeroObjectType.Information,
                 Value = 0,
                 CanInventory = true,
@@ -76,10 +72,10 @@ namespace TB_QuestGame
             new HeroObject
             {
                 Id = 8,
-                Name = "Aion Tracker",
+                Name = "Cell Phone",
                 RoomLocationID = 0,
                 Description =
-                    "Standard issue device worn around wrist that allows for tracking and messaging.",
+                    "Now if only I could find some service for this thing.",
                 Type = HeroObjectType.Information,
                 Value = 0,
                 CanInventory = true,
@@ -90,10 +86,10 @@ namespace TB_QuestGame
             new HeroObject
             {
                 Id = 9,
-                Name = "RatPak 47",
+                Name = "Snack bars",
                 RoomLocationID = 0,
                 Description =
-                    "Standard issue ration package contain nutrients for 72 hours.",
+                    "Some terrible tasting food bars.",
                 Type = HeroObjectType.Food,
                 Value = 0,
                 CanInventory = true,
@@ -104,18 +100,18 @@ namespace TB_QuestGame
             new HeroObject
             {
                 Id = 5,
-                Name = "Boldendorian Chest",
+                Name = "Treasure Chest",
                 RoomLocationID = 2,
-                Description = "A large wooden chest adorned with jewels.",
+                Description = "A large wooden chest adorned with jewels. Why is this in a hotel?",
                 //IsDeadly = true
             },
 
             new HeroObject
             {
                 Id = 6,
-                Name = "Silver Mirror",
+                Name = "Vanity Mirror",
                 RoomLocationID = 2,
-                Description = "A small silver mirror hanging on the wall next to a small window.",
+                Description = "A mirror hanging on the wall next to a small window.",
                 //IsDeadly = true
             }
             };
