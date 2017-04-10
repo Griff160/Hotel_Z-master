@@ -10,9 +10,6 @@ namespace TB_QuestGame
         /// static class to hold objects in the game universe
         /// </summary>
  
-        //
-        // TODO change item info
-        //
         public static partial class HotelObjects
         {
             public static List<GameObject> gameObjects = new List<GameObject>()
