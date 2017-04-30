@@ -571,18 +571,21 @@ namespace TB_QuestGame
             //
             List<GameObject> gameObjectsInCurrentRoomLocation = _gameHotel.GetGameObjectsByRoomLocationId(_gameHero.RoomLocationID);
 
+            //
+            // get list of NPCs in current room location
+            //
             List<Npc> npcsInCurrentRoomLocation = _gameHotel.GetNpcsByRoomLocationId(_gameHero.RoomLocationID);
 
             string messageBoxText = Text.LookAround(currentRoomLocation) + Environment.NewLine + Environment.NewLine;
-            messageBoxText += Text.GameObjectsChooseList(gameObjectsInCurrentRoomLocation);
+            messageBoxText += Text.GameObjectsChooseList(gameObjectsInCurrentRoomLocation) + Environment.NewLine;
             messageBoxText += Text.NpcsChooseList(npcsInCurrentRoomLocation);
 
-            DisplayGamePlayScreen("Current Location:", Text.LookAround(currentRoomLocation), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen("Current Location:", messageBoxText, ActionMenu.MainMenu, "");
         }
 
         public void DisplayGameObjectInfo(GameObject gameObject)
         {
-            DisplayGamePlayScreen("Current Location", Text.LookAt(gameObject), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen("Current Location", Text.LookAt(gameObject), ActionMenu.ObjectMenu, "");
         }
 
         public int DisplayGetHeroObjectToPickUp()
@@ -597,7 +600,7 @@ namespace TB_QuestGame
 
             if (heroObjectsInRoomLocation.Count > 0)
             {
-                DisplayGamePlayScreen("Pick Up Game Object", Text.GameObjectsChooseList(heroObjectsInRoomLocation), ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("Pick Up Game Object", Text.GameObjectsChooseList(heroObjectsInRoomLocation), ActionMenu.ObjectMenu, "");
 
                 while (!validGameObjectId)
                 {
@@ -631,7 +634,7 @@ namespace TB_QuestGame
             }
             else
             {
-                DisplayGamePlayScreen("Pick Up Game Object", "It appears there are no game objects here.", ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("Pick Up Game Object", "It appears there are no game objects here.", ActionMenu.ObjectMenu, "");
             }
 
             return gameObjectId;
@@ -646,7 +649,7 @@ namespace TB_QuestGame
 
             if (_gameHero.Inventory.Count > 0)
             {
-                DisplayGamePlayScreen("Put Down Game Object", Text.GameObjectsChooseList(_gameHero.Inventory), ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("Put Down Game Object", Text.GameObjectsChooseList(_gameHero.Inventory), ActionMenu.ObjectMenu, "");
 
                 while (!validInventoryObjectId)
                 {
@@ -677,7 +680,7 @@ namespace TB_QuestGame
             }
             else
             {
-                DisplayGamePlayScreen("Pick Up Game Object", "It appears there are no objects currently in inventory.", ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("Pick Up Game Object", "It appears there are no objects currently in inventory.", ActionMenu.ObjectMenu, "");
             }
 
             return heroObjectId;
@@ -734,7 +737,7 @@ namespace TB_QuestGame
 
             if (gameObjectsInRoomLocation.Count > 0)
             {
-                DisplayGamePlayScreen("Look at a Object", Text.GameObjectsChooseList(gameObjectsInRoomLocation), ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("Look at a Object", Text.GameObjectsChooseList(gameObjectsInRoomLocation), ActionMenu.ObjectMenu, "");
 
                 while (!validGamerObjectId)
                 {
@@ -759,7 +762,7 @@ namespace TB_QuestGame
             }
             else
             {
-                DisplayGamePlayScreen("Look at a Object", "It appears there are no game objects here.", ActionMenu.MainMenu, "");
+                DisplayGamePlayScreen("Look at a Object", "It appears there are no game objects here.", ActionMenu.ObjectMenu, "");
             }
 
             return gameObjectId;
@@ -776,12 +779,12 @@ namespace TB_QuestGame
                 visitedRoomLocations.Add(_gameHotel.GetRoomLocationById(roomLocationId));
             }
             DisplayGamePlayScreen("Rooms visited", Text.VisitedLocations
-                (visitedRoomLocations), ActionMenu.MainMenu, "");
+                (visitedRoomLocations), ActionMenu.HeroMenu, "");
         }
 
         public void DisplayInventory()
         {
-            DisplayGamePlayScreen("Current Inventory", Text.CurrentInventory(_gameHero.Inventory), ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen("Current Inventory", Text.CurrentInventory(_gameHero.Inventory), ActionMenu.HeroMenu, "");
         }
 
         public void DisplayListOfAllGameObjects()
@@ -855,12 +858,12 @@ namespace TB_QuestGame
 
         public void DisplayConfirmHeroObjectAddedToInventory(HeroObject objectAddedToInventory)
         {
-            DisplayGamePlayScreen("Pick Up Game Object", $"The {objectAddedToInventory.Name} has been added to your inventory.", ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen("Pick Up Game Object", $"The {objectAddedToInventory.Name} has been added to your inventory.", ActionMenu.ObjectMenu, "");
         }
 
         public void DisplayConfirmHeroObjectRemovedFromInventory(HeroObject objectRemovedFromInventory)
         {
-            DisplayGamePlayScreen("Put Down Game Object", $"The {objectRemovedFromInventory.Name} has been removed from your inventory.", ActionMenu.MainMenu, "");
+            DisplayGamePlayScreen("Put Down Game Object", $"The {objectRemovedFromInventory.Name} has been removed from your inventory.", ActionMenu.ObjectMenu, "");
         }
 
         /// <summary>
