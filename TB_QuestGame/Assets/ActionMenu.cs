@@ -16,6 +16,9 @@ namespace TB_QuestGame
             MissionIntro,
             InitializeMission,
             MainMenu,
+            ObjectMenu,
+            NpcMenu,
+            HeroMenu,
             AdminMenu
         }
 
@@ -47,16 +50,13 @@ namespace TB_QuestGame
             MenuTitle = "Main Menu",
             MenuChoices = new Dictionary<char, HeroAction>()
                 {
-                    { '1', HeroAction.HeroInfo },
-                    { '2', HeroAction.LookAround },
-                    { '3', HeroAction.LookAt },
-                    { '4', HeroAction.PickUp },
-                    { '5', HeroAction.PutDown },
-                    { '6', HeroAction.Inventory },
-                    { '7', HeroAction.Travel },
-                    { '8', HeroAction.HeroLocationsVisited },
-                    { '9', HeroAction.AdminMenu },
-                    { '0', HeroAction.Exit },
+                    { '1', HeroAction.LookAround },
+                    { '2', HeroAction.Travel },
+                    { '3', HeroAction.ObjectMenu },
+                    { '4', HeroAction.NonplayerCharacterMenu},
+                    { '5', HeroAction.HeroMenu},
+                    { '6', HeroAction.AdminMenu },
+                    { '0', HeroAction.Exit }
                 }
         };
 
@@ -67,11 +67,49 @@ namespace TB_QuestGame
             MenuChoices = new Dictionary<char, HeroAction>()
                 {
                     { '1', HeroAction.ListRoomLocations },
-                    { '2', HeroAction.ListGameObjects },
-                    { '3', HeroAction.ReturnToMainMenu }
+                    { '2', HeroAction.ListGameObjects},
+                    { '3', HeroAction.ListNonplayerCharacters},
+                    { '0', HeroAction.ReturnToMainMenu }
                 }
         };
 
-        
+        public static Menu HeroMenu = new Menu()
+        {
+            MenuName = "HeroMenu",
+            MenuTitle = "Hero Menu",
+            MenuChoices = new Dictionary<char, HeroAction>()
+                {
+                    { '1', HeroAction.HeroInfo },
+                    { '2', HeroAction.Inventory},
+                    { '3', HeroAction.HeroLocationsVisited},
+                    { '0', HeroAction.ReturnToMainMenu }
+                }
+        };
+
+        public static Menu ObjectMenu = new Menu()
+        {
+            MenuName = "ObjectMenu",
+            MenuTitle = "Object Menu",
+            MenuChoices = new Dictionary<char, HeroAction>()
+                {
+                    { '1', HeroAction.LookAt },
+                    { '2', HeroAction.PickUp},
+                    { '3', HeroAction.PutDown},
+                    { '0', HeroAction.ReturnToMainMenu }
+                }
+        };
+
+        public static Menu NpcMenu = new Menu()
+        {
+            MenuName = "NpcMenu",
+            MenuTitle = "NPC Menu",
+            MenuChoices = new Dictionary<char, HeroAction>()
+                {
+                    { '1', HeroAction.TalkTo},
+                    { '0', HeroAction.ReturnToMainMenu }
+                }
+        };
+
+
     }
 }

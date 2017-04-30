@@ -54,7 +54,7 @@ namespace TB_QuestGame
             set { _generalContents = value; }
         }
 
-        public bool Accessable
+        public bool Accessible
         {
             get { return _accessable; }
             set { _accessable = value; }

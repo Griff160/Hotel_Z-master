@@ -132,43 +132,25 @@ namespace TB_QuestGame
 
         #region MAIN MENU ACTION SCREENS
 
-        public static string HeroInfo(Hero gameHero)
+        public static string TravelerInfo(Hero gameTraveler, RoomLocation currentLocation)
         {
             string messageBoxText =
-                $"\tHero Name: {gameHero.Name}\n" +
-                $"\tHero Age: {gameHero.Age}\n" +
-                $"\tHero Class: {gameHero.Class}\n" +
+                $"\tTraveler Name: {gameTraveler.Name}\n" +
+                $"\tTraveler Age: {gameTraveler.Age}\n" +
+                $"\tTraveler Race: {gameTraveler.Class}\n" +
+                " \n" +
+                $"\tCurrent Location: {currentLocation.CommonName}\n" +
                 " \n";
 
             return messageBoxText;
         }
 
-        public static string ListRoomLocations(IEnumerable<RoomLocation> roomLocations)
+        public static string CurrentLocationInfo(RoomLocation roomLocation)
         {
             string messageBoxText =
-                "Rooms\n" +
+                $"Current Location: {roomLocation.CommonName}\n" +
                 " \n" +
-
-                //
-                // display table header
-                //
-                "ID".PadRight(10) + "Name".PadRight(30) + "\n" +
-                "---".PadRight(10) + "----------------------".PadRight(30) + "\n";
-
-            //
-            // display all locations
-            //
-
-            string roomLocationList = null;
-            foreach (RoomLocation roomLocation in roomLocations)
-            {
-                roomLocationList +=
-                    $"{roomLocation.RoomLocationID}".PadRight(10) +
-                    $"{roomLocation.CommonName}".PadRight(30) +
-                    Environment.NewLine;
-            }
-
-            messageBoxText += roomLocationList;
+               roomLocation.Description;
 
             return messageBoxText;
         }
@@ -178,15 +160,21 @@ namespace TB_QuestGame
             string messageBoxText =
                 $"Current Location: {roomLocation.CommonName}\n" +
                 " \n" +
-                roomLocation.GeneralContents;
+                roomLocation.Description;
 
             return messageBoxText;
         }
 
-        public static string Travel(Hero gameHero, List<RoomLocation> roomLocations)
+        /// <summary>
+        /// list all locations other than the current location
+        /// </summary>
+        /// <param name="gamehero">game traveler object</param>
+        /// <param name="roomLocations">list of all space time locations</param>
+        /// <returns></returns>
+        public static string Travel(Hero gamehero, List<RoomLocation> roomLocations)
         {
             string messageBoxText =
-                $"{gameHero.Name}, Where would you like to travel to?\n" +
+                $"{gamehero.Name}, Aion Base will need to know the name of the new location.\n" +
                 " \n" +
                 "Enter the ID number of your desired location from the table below.\n" +
                 " \n" +
@@ -203,12 +191,12 @@ namespace TB_QuestGame
             string roomLocationList = null;
             foreach (RoomLocation roomLocation in roomLocations)
             {
-                if (roomLocation.RoomLocationID != gameHero.RoomLocationID)
+                if (roomLocation.RoomLocationID != gamehero.RoomLocationID)
                 {
                     roomLocationList +=
                         $"{roomLocation.RoomLocationID}".PadRight(10) +
                         $"{roomLocation.CommonName}".PadRight(30) +
-                        $"{roomLocation.Accessable}".PadRight(10) +
+                        $"{roomLocation.Accessible}".PadRight(10) +
                         Environment.NewLine;
                 }
             }
@@ -218,19 +206,39 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
-        public static string CurrentLocationInfo(RoomLocation roomLocation)
-        {
-            string messageBoxText =
-                $"Current Room: {roomLocation.CommonName}\n" +
-                " \n" +
-                roomLocation.Description;
-            return messageBoxText;
-        }
-
         public static string VisitedLocations(IEnumerable<RoomLocation> roomLocations)
         {
             string messageBoxText =
-                "Rooms Visited\n" +
+                "Room Locations Visited\n" +
+                " \n" +
+
+                //
+                // display table header
+                //
+                "ID".PadRight(10) + "Name".PadRight(30) + "\n" +
+                "---".PadRight(10) + "----------------------".PadRight(30) + "\n";
+
+            //
+            // display all locations
+            //
+            string roomLocationList = null;
+            foreach (RoomLocation roomLocation in roomLocations)
+            {
+                roomLocationList +=
+                    $"{roomLocation.RoomLocationID}".PadRight(10) +
+                    $"{roomLocation.CommonName}".PadRight(30) +
+                    Environment.NewLine;
+            }
+
+            messageBoxText += roomLocationList;
+
+            return messageBoxText;
+        }
+
+        public static string ListAllRoomLocations(IEnumerable<RoomLocation> roomLocations)
+        {
+            string messageBoxText =
+                "Room Locations\n" +
                 " \n" +
 
                 //
@@ -276,7 +284,7 @@ namespace TB_QuestGame
                 "----------------------".PadRight(10) + "\n";
 
             //
-            // display all hero objects in rows
+            // display all traveler objects in rows
             //
             string gameObjectRows = null;
             foreach (GameObject gameObject in gameObjects)
@@ -289,6 +297,43 @@ namespace TB_QuestGame
             }
 
             messageBoxText += gameObjectRows;
+
+            return messageBoxText;
+        }
+
+        public static string ListAllNpcObjects(IEnumerable<Npc> npcObjects)
+        {
+            //
+            // display table name and column headers
+            //
+            string messageBoxText =
+                "NPC Objects\n" +
+                " \n" +
+
+                //
+                // display table header
+                //
+                "ID".PadRight(10) +
+                "Name".PadRight(30) +
+                "Room Location Id".PadRight(10) + "\n" +
+                "---".PadRight(10) +
+                "----------------------".PadRight(30) +
+                "----------------------".PadRight(10) + "\n";
+
+            //
+            // display all npc objects in rows
+            //
+            string npcObjectRows = null;
+            foreach (Npc npcObject in npcObjects)
+            {
+                npcObjectRows +=
+                    $"{npcObject.Id}".PadRight(10) +
+                    $"{npcObject.Name}".PadRight(30) +
+                    $"{npcObject.RoomLocationID}".PadRight(10) +
+                    Environment.NewLine;
+            }
+
+            messageBoxText += npcObjectRows;
 
             return messageBoxText;
         }
@@ -311,7 +356,7 @@ namespace TB_QuestGame
                 "----------------------".PadRight(30) + "\n";
 
             //
-            // display all hero objects in rows
+            // display all traveler objects in rows
             //
             string gameObjectRows = null;
             foreach (GameObject gameObject in gameObjects)
@@ -323,6 +368,53 @@ namespace TB_QuestGame
             }
 
             messageBoxText += gameObjectRows;
+
+            return messageBoxText;
+        }
+
+
+        public static string ListRoomLocationObjectsByRoomLocation(int roomLocationId, IEnumerable<GameObject> gameObjects)
+        {
+            //
+            // generate a list of Hero objects from the game object list with the current room location id
+            //
+            List<RoomLocationObject> roomLocationObjects = new List<RoomLocationObject>();
+            foreach (var gameObject in gameObjects)
+            {
+                if (gameObject is HeroObject &&
+                    gameObject.RoomLocationID == roomLocationId)
+                {
+                    roomLocationObjects.Add(gameObject as RoomLocationObject);
+                }
+            }
+
+            //
+            // display table name and column headers
+            //
+            string messageBoxText =
+                "Space-Time Location Objects\n" +
+                " \n" +
+
+                //
+                // display table header
+                //
+                "ID".PadRight(10) + "Name".PadRight(30) + "Type".PadRight(20) + "\n" +
+                "---".PadRight(10) + "----------------------".PadRight(30) +
+                "----------------------".PadRight(20) + "\n";
+
+            //
+            // display all traveler objects in rows
+            //
+            string roomLocationObjectRows = null;
+            foreach (RoomLocationObject roomLocationObject in roomLocationObjects)
+            {
+                roomLocationObjectRows +=
+                    $"{roomLocationObject.Id}".PadRight(10) +
+                    $"{roomLocationObject.Name}".PadRight(30) +
+                    Environment.NewLine;
+            }
+
+            messageBoxText += roomLocationObjectRows;
 
             return messageBoxText;
         }
@@ -378,7 +470,7 @@ namespace TB_QuestGame
             "\n";
 
             //
-            // display all hero objects in rows
+            // display all traveler objects in rows
             //
             string inventoryObjectRows = null;
             foreach (HeroObject inventoryObject in inventory)
@@ -395,7 +487,39 @@ namespace TB_QuestGame
             return messageBoxText;
         }
 
+        public static string NpcsChooseList(IEnumerable<Npc> npcs)
+        {
+            //
+            // display table name and column headers
+            //
+            string messageBoxText =
+                "NPCs\n" +
+                " \n" +
 
+                //
+                // display table header
+                //
+                "ID".PadRight(10) +
+                "Name".PadRight(30) + "\n" +
+                "---".PadRight(10) +
+                "----------------------".PadRight(30) + "\n";
+
+            //
+            // display all NPCs in rows
+            //
+            string npcRows = null;
+            foreach (Npc npc in npcs)
+            {
+                npcRows +=
+                    $"{npc.Id}".PadRight(10) +
+                    $"{npc.Name}".PadRight(30) +
+                    Environment.NewLine;
+            }
+
+            messageBoxText += npcRows;
+
+            return messageBoxText;
+        }
 
         #endregion
 

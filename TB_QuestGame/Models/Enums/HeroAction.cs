@@ -14,16 +14,26 @@ namespace TB_QuestGame
         None,
         MissionSetup,
         LookAround,
+        Travel,
+
+        HeroMenu,
+        HeroInfo,
+        Inventory,
+        HeroLocationsVisited,
+
+        ObjectMenu,
         LookAt,
         PickUp,
         PutDown,
-        Inventory,
-        Travel,
-        HeroInfo,
-        HeroLocationsVisited,
+
+        NonplayerCharacterMenu,
+        TalkTo,
+
+        AdminMenu,
         ListRoomLocations,
         ListGameObjects,
-        AdminMenu,
+        ListNonplayerCharacters,
+
         ReturnToMainMenu,
         Exit
     }

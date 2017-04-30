@@ -114,14 +114,7 @@ namespace TB_QuestGame
                 //
                 // get next game action from player
                 //
-                if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.MainMenu)
-                {
-                    heroActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu);
-                }
-                else if (ActionMenu.currentMenu == ActionMenu.CurrentMenu.AdminMenu)
-                {
-                    heroActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.AdminMenu);
-                }
+                heroActionChoice = GetNextHeroAction();
 
                 //
                 // choose an action based on the user's menu choice
@@ -137,6 +130,14 @@ namespace TB_QuestGame
 
                     case HeroAction.LookAround:
                         _gameConsoleView.DisplayLookAround();
+                        break;
+
+                    case HeroAction.Travel:
+                        TravelAction();
+                        break;
+
+                    case HeroAction.HeroLocationsVisited:
+                        _gameConsoleView.DisplayLocationsVisited();
                         break;
 
                     case HeroAction.LookAt:
@@ -155,21 +156,8 @@ namespace TB_QuestGame
                         _gameConsoleView.DisplayInventory();
                         break;
 
-                    case HeroAction.Travel:
-                        //
-                        // get new location choice and update the current location property
-                        //                        
-                        _gameHero.RoomLocationID = _gameConsoleView.DisplayGetNextRoomLocation();
-                        _currentLocation = _gameHotel.GetRoomLocationById(_gameHero.RoomLocationID);
-
-                        //
-                        // set the game play screen to the current location info format
-                        //
-                        _gameConsoleView.DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(_currentLocation), ActionMenu.MainMenu, "");
-                        break;
-
-                    case HeroAction.HeroLocationsVisited:
-                        _gameConsoleView.DisplayLocationsVisited();
+                    case HeroAction.TalkTo:
+                        TalkToAction();
                         break;
 
                     case HeroAction.ListRoomLocations:
@@ -178,6 +166,25 @@ namespace TB_QuestGame
 
                     case HeroAction.ListGameObjects:
                         _gameConsoleView.DisplayListOfAllGameObjects();
+                        break;
+
+                    case HeroAction.ListNonplayerCharacters:
+                        _gameConsoleView.DisplayListOfAllNpcObjects();
+                        break;
+
+                    case HeroAction.HeroMenu:
+                        ActionMenu.currentMenu = ActionMenu.CurrentMenu.HeroMenu;
+                        _gameConsoleView.DisplayGamePlayScreen("Hero Menu", "Select an operation from the menu.", ActionMenu.HeroMenu, "");
+                        break;
+
+                    case HeroAction.ObjectMenu:
+                        ActionMenu.currentMenu = ActionMenu.CurrentMenu.ObjectMenu;
+                        _gameConsoleView.DisplayGamePlayScreen("Object Menu", "Select an operation from the menu.", ActionMenu.ObjectMenu, "");
+                        break;
+
+                    case HeroAction.NonplayerCharacterMenu:
+                        ActionMenu.currentMenu = ActionMenu.CurrentMenu.NpcMenu;
+                        _gameConsoleView.DisplayGamePlayScreen("NPC Menu", "Select an operation from the menu.", ActionMenu.NpcMenu, "");
                         break;
 
                     case HeroAction.AdminMenu:
@@ -205,6 +212,63 @@ namespace TB_QuestGame
             Environment.Exit(1);
         }
 
+        /// <summary>
+        /// display the correct menu/sub-menu and get the next traveler action
+        /// </summary>
+        /// <returns>traveler action</returns>
+        private HeroAction GetNextHeroAction()
+        {
+            HeroAction heroActionChoice = HeroAction.None;
+
+            switch (ActionMenu.currentMenu)
+            {
+                case ActionMenu.CurrentMenu.MainMenu:
+                    heroActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.MainMenu);
+                    break;
+
+                case ActionMenu.CurrentMenu.ObjectMenu:
+                    heroActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.ObjectMenu);
+                    break;
+
+                case ActionMenu.CurrentMenu.NpcMenu:
+                    heroActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.NpcMenu);
+                    break;
+
+                case ActionMenu.CurrentMenu.HeroMenu:
+                    heroActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.HeroMenu);
+                    break;
+
+                case ActionMenu.CurrentMenu.AdminMenu:
+                    heroActionChoice = _gameConsoleView.GetActionMenuChoice(ActionMenu.AdminMenu);
+                    break;
+
+                default:
+                    break;
+            }
+
+            return heroActionChoice;
+        }
+
+        /// <summary>
+        /// process the Travel action
+        /// </summary>
+        private void TravelAction()
+        {
+            //
+            // get new location choice and update the current location property
+            //                        
+            _gameHero.RoomLocationID = _gameConsoleView.DisplayGetNextRoomLocation();
+            _currentLocation = _gameHotel.GetRoomLocationById(_gameHero.RoomLocationID);
+
+            //
+            // display the new room location info
+            //
+            _gameConsoleView.DisplayCurrentLocationInfo();
+        }
+
+        /// <summary>
+        /// process the Look At action
+        /// </summary>
         private void LookAtAction()
         {
             //
@@ -229,6 +293,9 @@ namespace TB_QuestGame
             }
         }
 
+        /// <summary>
+        /// process the Pick Up action
+        /// </summary>
         private void PickUpAction()
         {
             //
@@ -259,6 +326,9 @@ namespace TB_QuestGame
             }
         }
 
+        /// <summary>
+        /// process the Put Down action
+        /// </summary>
         private void PutDownAction()
         {
             //
@@ -282,6 +352,33 @@ namespace TB_QuestGame
             //
             _gameConsoleView.DisplayConfirmHeroObjectRemovedFromInventory(heroObject);
 
+        }
+
+        /// <summary>
+        /// process the Talk To action
+        /// </summary>
+        private void TalkToAction()
+        {
+            //
+            // display a list of NPCs in space-time location and get a player choice
+            //
+            int npcToTalkToId = _gameConsoleView.DisplayGetNpcToTalkTo();
+
+            //
+            // display NPC's message
+            //
+            if (npcToTalkToId != 0)
+            {
+                //
+                // get the NPC from the universe
+                //
+                Npc npc = _gameHotel.GetNpcById(npcToTalkToId);
+
+                //
+                // display information for the object chosen
+                //
+                _gameConsoleView.DisplayTalkTo(npc);
+            }
         }
 
         /// <summary>

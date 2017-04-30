@@ -22,7 +22,7 @@ namespace TB_QuestGame
                 GeneralContents = "There is not much of use on this floor. I wish I would " +
                     "have asked for a room on a lower floor. At least the zombies seem to not " +
                     "have made it up here yet. \n",
-                Accessable = true,
+                Accessible = true,
                 ExperiencePoints = 10,
                 Lives = 0
             },
@@ -37,7 +37,7 @@ namespace TB_QuestGame
                     "distance.",
                 GeneralContents = "You can see what remains of a woman in a wedding dress, her remains half eaten." +
                     "There is nothing of use on her body though. ",
-                Accessable = true,
+                Accessible = true,
                 ExperiencePoints = 20,
                 Lives = 0
             },
@@ -51,7 +51,7 @@ namespace TB_QuestGame
                               "will you ever make it to the exit? ",
                 GeneralContents = "Most of the rooms are locked. There is a bell boy who is cowering in the corner. " +
                     "He is rocking back and forth talking about the terrifying zombies",
-                Accessable = true,
+                Accessible = true,
                 ExperiencePoints = 20,
                 Lives = 0
             },
@@ -63,7 +63,7 @@ namespace TB_QuestGame
                 HotelLocation = "Floor 5",
                 Description = "The 5th floor seems pretty boring... maybe I should look around. ",
                 GeneralContents = "The floor ended up being boring. There was nothing of note here.",
-                Accessable = true,
+                Accessible = true,
                 ExperiencePoints = 10,
                 Lives = 0
             },
@@ -75,7 +75,7 @@ namespace TB_QuestGame
                 HotelLocation = "Floor 4",
                 Description = "I have a good feeling about this floor for some reason! ",
                 GeneralContents = "You find a sandwich and gain 1 life! ",
-                Accessable = true,
+                Accessible = true,
                 ExperiencePoints = 100,
                 Lives = 1
             },
@@ -88,7 +88,7 @@ namespace TB_QuestGame
                 Description = "Just a typical floor in an uneventful hotel. " ,
                 GeneralContents = "Upon further inspection this floor is very eventful, considering there are " +
                     "almost 30 half eaten bodies around. ",
-                Accessable = true,
+                Accessible = true,
                 ExperiencePoints = 10,
                 Lives = 0
             },
@@ -100,7 +100,7 @@ namespace TB_QuestGame
                 HotelLocation = "Floor 2",
                 Description = "Almost to the ground floor!",
                 GeneralContents = "You look in to the room and find a zombie who bites you! Removing a life from your total. ",
-                Accessable = true,
+                Accessible = true,
                 ExperiencePoints = -10,
                 Lives = -1
             },
@@ -112,7 +112,7 @@ namespace TB_QuestGame
                 HotelLocation = "Floor 1",
                 Description = "One more floor to go. I hope nothing bad will happen to me now that im this close. ",
                 GeneralContents = "You look in to the room and find a zombie who bites you! Removing a life from your total. ",
-                Accessable = true,
+                Accessible = true,
                 ExperiencePoints = 10,
                 Lives = -1
             },
@@ -124,7 +124,7 @@ namespace TB_QuestGame
                 HotelLocation = "Ground Floor",
                 Description = "This is the exit!",
                 GeneralContents = "Now lets see if i can survive outside...",
-                Accessable = false,
+                Accessible = false,
                 ExperiencePoints = 10000,
                 Lives = 0
             }

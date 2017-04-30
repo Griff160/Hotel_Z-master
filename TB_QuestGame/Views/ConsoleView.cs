@@ -175,6 +175,42 @@ namespace TB_QuestGame
         }
 
         /// <summary>
+        /// get an integer value from the user
+        /// </summary>
+        /// <returns>integer value</returns>
+        public bool GetDouble(string prompt, double minimumValue, double maximumValue, out double doubleChoice)
+        {
+            bool validResponse = false;
+            doubleChoice = 0;
+
+            DisplayInputBoxPrompt(prompt);
+            while (!validResponse)
+            {
+                if (double.TryParse(Console.ReadLine(), out doubleChoice))
+                {
+                    if (doubleChoice >= minimumValue && doubleChoice <= maximumValue)
+                    {
+                        validResponse = true;
+                    }
+                    else
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage($"You must enter an number value between {minimumValue} and {maximumValue}. Please try again.");
+                        DisplayInputBoxPrompt(prompt);
+                    }
+                }
+                else
+                {
+                    ClearInputBox();
+                    DisplayInputErrorMessage($"You must enter an number value between {minimumValue} and {maximumValue}. Please try again.");
+                    DisplayInputBoxPrompt(prompt);
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// get a character race value from the user
         /// </summary>
         /// <returns>character race value</returns>
@@ -502,13 +538,22 @@ namespace TB_QuestGame
 
         public void DisplayHeroInfo()
         {
-            DisplayGamePlayScreen("Hero Information", Text.HeroInfo(_gameHero), ActionMenu.MainMenu, "");
+            RoomLocation currentSpaceTimeLocation = _gameHotel.GetRoomLocationById(_gameHero.RoomLocationID);
+            DisplayGamePlayScreen("Traveler Information", Text.TravelerInfo(_gameHero, currentSpaceTimeLocation), ActionMenu.HeroMenu, "");
+        }
+
+        /// <summary>
+        /// display all relevant information about the current location
+        /// </summary>
+        public void DisplayCurrentLocationInfo()
+        {
+            RoomLocation currentRoomLocation = _gameHotel.GetRoomLocationById(_gameHero.RoomLocationID);
+            DisplayGamePlayScreen("Current Location", Text.CurrentLocationInfo(currentRoomLocation), ActionMenu.MainMenu, "");
         }
 
         public void DisplayListOfRoomLocations()
         {
-            DisplayGamePlayScreen("List: Rooms", Text.ListRoomLocations
-                (_gameHotel.RoomLocations), ActionMenu.AdminMenu, "");
+            DisplayGamePlayScreen("List: Room Locations", Text.ListAllRoomLocations(_gameHotel.RoomLocations), ActionMenu.AdminMenu, "");
         }
 
         //
@@ -526,8 +571,11 @@ namespace TB_QuestGame
             //
             List<GameObject> gameObjectsInCurrentRoomLocation = _gameHotel.GetGameObjectsByRoomLocationId(_gameHero.RoomLocationID);
 
+            List<Npc> npcsInCurrentRoomLocation = _gameHotel.GetNpcsByRoomLocationId(_gameHero.RoomLocationID);
+
             string messageBoxText = Text.LookAround(currentRoomLocation) + Environment.NewLine + Environment.NewLine;
             messageBoxText += Text.GameObjectsChooseList(gameObjectsInCurrentRoomLocation);
+            messageBoxText += Text.NpcsChooseList(npcsInCurrentRoomLocation);
 
             DisplayGamePlayScreen("Current Location:", Text.LookAround(currentRoomLocation), ActionMenu.MainMenu, "");
         }
@@ -588,6 +636,8 @@ namespace TB_QuestGame
 
             return gameObjectId;
         }
+
+
 
         public int DisplayGetInventoryObjectToPutDown()
         {
@@ -654,7 +704,7 @@ namespace TB_QuestGame
                 //
                 if (_gameHotel.IsValidRoomLocationId(roomLocationId))
                 {
-                    if (_gameHotel.GetRoomLocationById(roomLocationId).Accessable)
+                    if (_gameHotel.GetRoomLocationById(roomLocationId).Accessible)
                     {
                         validRoomLocationId = true;
                     }
@@ -739,6 +789,70 @@ namespace TB_QuestGame
             DisplayGamePlayScreen("List: GameObjects", Text.ListAllGameObjects(_gameHotel.GameObjects), ActionMenu.AdminMenu, "");
         }
 
+        /// <summary>
+        /// display a list of all npc objects
+        /// </summary>
+        public void DisplayListOfAllNpcObjects()
+        {
+            DisplayGamePlayScreen("List: Npc Objects", Text.ListAllNpcObjects(_gameHotel.Npcs), ActionMenu.AdminMenu, "");
+        }
+
+        /// <summary>
+        /// display get the NPC to talk to
+        /// </summary>
+        /// <returns>NPC Id</returns>
+        public int DisplayGetNpcToTalkTo()
+        {
+            int npcId = 0;
+            bool validNpcId = false;
+
+            //
+            // get a list of NPCs in the current space-time location
+            //
+            List<Npc> npcsInSpaceTimeLocation = _gameHotel.GetNpcsByRoomLocationId(_gameHero.RoomLocationID);
+
+            if (npcsInSpaceTimeLocation.Count > 0)
+            {
+                DisplayGamePlayScreen("Choose Character to Speak With", Text.NpcsChooseList(npcsInSpaceTimeLocation), ActionMenu.NpcMenu, "");
+
+                while (!validNpcId)
+                {
+                    //
+                    // get an integer from the player
+                    //
+                    GetInteger($"Enter the Id number of the character you wish to speak with: ", 0, 0, out npcId);
+
+                    //
+                    // validate integer as a valid NPC id and in current location
+                    //
+                    if (_gameHotel.IsValidNpcByLocationId(npcId, _gameHero.RoomLocationID))
+                    {
+                        Npc npc = _gameHotel.GetNpcById(npcId);
+                        if (npc is ISpeak)
+                        {
+                            validNpcId = true;
+                        }
+                        else
+                        {
+                            ClearInputBox();
+                            DisplayInputErrorMessage("It appears this character has nothing to say. Please try again.");
+                        }
+                    }
+                    else
+                    {
+                        ClearInputBox();
+                        DisplayInputErrorMessage("It appears you entered an invalid NPC id. Please try again.");
+                    }
+                }
+            }
+            else
+            {
+                DisplayGamePlayScreen("Choose Character to Speak With", "It appears there are no NPCs here.", ActionMenu.NpcMenu, "");
+            }
+
+            return npcId;
+        }
+
         public void DisplayConfirmHeroObjectAddedToInventory(HeroObject objectAddedToInventory)
         {
             DisplayGamePlayScreen("Pick Up Game Object", $"The {objectAddedToInventory.Name} has been added to your inventory.", ActionMenu.MainMenu, "");
@@ -749,7 +863,23 @@ namespace TB_QuestGame
             DisplayGamePlayScreen("Put Down Game Object", $"The {objectRemovedFromInventory.Name} has been removed from your inventory.", ActionMenu.MainMenu, "");
         }
 
+        /// <summary>
+        /// display the message from the NPC
+        /// </summary>
+        /// <param name="npc">speaking NPC</param>
+        public void DisplayTalkTo(Npc npc)
+        {
+            ISpeak speakingNpc = npc as ISpeak;
 
+            string message = speakingNpc.Speak();
+
+            if (message == "")
+            {
+                message = "It appears this character has nothing to say. Please try again.";
+            }
+
+            DisplayGamePlayScreen("Speak to Character", message, ActionMenu.NpcMenu, "");
+        }
 
         #endregion
 

@@ -15,6 +15,7 @@ namespace TB_QuestGame
         //
         private List<RoomLocation> _roomLocations;
         private List<GameObject> _gameObjects;
+        private List<Npc> _npcs;
 
         public List<RoomLocation> RoomLocations
         {
@@ -26,6 +27,12 @@ namespace TB_QuestGame
         {
             get { return _gameObjects; }
             set { _gameObjects = value; }
+        }
+
+        public List<Npc> Npcs
+        {
+            get { return _npcs; }
+            set { _npcs = value; }
         }
 
         #endregion
@@ -54,6 +61,7 @@ namespace TB_QuestGame
         {
             _roomLocations = HotelObjects.RoomLocations;
             _gameObjects = HotelObjects.gameObjects;
+            _npcs = HotelObjects.Npcs;
         }
 
         #endregion
@@ -153,6 +161,39 @@ namespace TB_QuestGame
             }
         }
 
+        /// <summary>
+        /// validate NPC object id number in current location
+        /// </summary>
+        /// <param name="npcId"></param>
+        /// <returns>is Id valid</returns>
+        public bool IsValidNpcByLocationId(int npcId, int currentRoomLocation)
+        {
+            List<int> npcIds = new List<int>();
+
+            //
+            // create a list of NPC ids in current space-time location
+            //
+            foreach (Npc npc in _npcs)
+            {
+                if (npc.RoomLocationID == currentRoomLocation)
+                {
+                    npcIds.Add(npc.Id);
+                }
+
+            }
+
+            //
+            // determine if the game object id is a valid id and return the result
+            //
+            if (npcIds.Contains(npcId))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// determine if a location is accessible to the player
@@ -162,7 +203,7 @@ namespace TB_QuestGame
         public bool IsAccessibleLocation(int roomLocationId)
         {
             RoomLocation roomLocation = GetRoomLocationById(roomLocationId);
-            if (roomLocation.Accessable == true)
+            if (roomLocation.Accessible == true)
             {
                 return true;
             }
@@ -291,6 +332,62 @@ namespace TB_QuestGame
             }
 
             return heroObjects;
+        }
+
+        /// <summary>
+        /// get an NPC object using an Id
+        /// </summary>
+        /// <param name="Id">NPC object Id</param>
+        /// <returns>requested NPC object</returns>
+        public Npc GetNpcById(int Id)
+        {
+            Npc npcToReturn = null;
+
+            //
+            // run through the NPC object list and grab the correct one
+            //
+            foreach (Npc npc in _npcs)
+            {
+                if (npc.Id == Id)
+                {
+                    npcToReturn = npc;
+                }
+            }
+
+            //
+            // the specified ID was not found in the universe
+            // throw and exception
+            //
+            if (npcToReturn == null)
+            {
+                string feedbackMessage = $"The NPC ID {Id} does not exist in the current Universe.";
+                throw new ArgumentException(Id.ToString(), feedbackMessage);
+            }
+
+            return npcToReturn;
+        }
+
+        /// <summary>
+        /// get all NPC objects in a location
+        /// </summary>
+        /// <param name="roomLocationId">space-time location id</param>
+        /// <returns>list of NPC objects</returns>
+        public List<Npc> GetNpcsByRoomLocationId(int roomLocationId)
+        {
+            List<Npc> npcs = new List<Npc>();
+
+            //
+            // run through the NPC object list and grab all that are in the current room location
+            //
+            foreach (Npc npc in _npcs)
+            {
+                if (npc.RoomLocationID == roomLocationId)
+                {
+                    npcs.Add(npc);
+                }
+            }
+
+            return npcs;
         }
 
         #endregion

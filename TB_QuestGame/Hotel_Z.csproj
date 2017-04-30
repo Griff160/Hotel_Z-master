@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ActionMenu.cs" />
+    <Compile Include="Assets\HotelNpcs.cs" />
     <Compile Include="Assets\HotelObjectsGameObjects.cs" />
     <Compile Include="Assets\HotelObjectsRoomLocations.cs" />
     <Compile Include="Assets\Text.cs" />
@@ -55,12 +56,16 @@
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\Enums\HeroObjectType.cs" />
     <Compile Include="Models\GameObject.cs" />
+    <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\HeroObject.cs" />
     <Compile Include="Models\Hotel.cs" />
+    <Compile Include="Models\ISpeak.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\Hero.cs" />
     <Compile Include="Models\Enums\HeroAction.cs" />
+    <Compile Include="Models\Npc.cs" />
     <Compile Include="Models\RoomLocation.cs" />
+    <Compile Include="Models\RoomLocationObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\ConsoleView.cs" />
