@@ -360,7 +360,7 @@ namespace TB_QuestGame
         private void TalkToAction()
         {
             //
-            // display a list of NPCs in space-time location and get a player choice
+            // display a list of NPCs in room location and get a player choice
             //
             int npcToTalkToId = _gameConsoleView.DisplayGetNpcToTalkTo();
 
@@ -416,7 +416,20 @@ namespace TB_QuestGame
                 // update lives for visiting locations
                 //
                 _gameHero.Lives += _currentLocation.Lives;
+
+                //
+                // update experience points for talking to npcs
+                //
+                    //_gameHero.ExperiencePoints += _currentNpc.ExperiencePoints;
+                //
+                // update lives for talking to npcs
+                //
+                    //_gamehero.Lives += _currentNpc.Lives;
             }
+            //if (_gameHero.Inventory.Contains())
+            //{
+
+            //}
         }
 
         #endregion

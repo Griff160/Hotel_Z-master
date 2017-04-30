@@ -37,7 +37,7 @@ namespace TB_QuestGame
                 Value = 45,
                 CanInventory = true,
                 IsConsumable = true,
-                IsVisible = true
+                IsVisible = true               
             },
 
             new HeroObject

@@ -556,9 +556,6 @@ namespace TB_QuestGame
             DisplayGamePlayScreen("List: Room Locations", Text.ListAllRoomLocations(_gameHotel.RoomLocations), ActionMenu.AdminMenu, "");
         }
 
-        //
-        // TODO fix game objects not being visible when looking around
-        //
         public void DisplayLookAround()
         {
             //

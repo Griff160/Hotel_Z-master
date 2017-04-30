@@ -16,6 +16,7 @@ namespace TB_QuestGame
         public bool CanInventory { get; set; }
         public bool IsConsumable { get; set; }
         public bool IsVisible { get; set; }
+        public bool IsDeadly { get; set; }
         public int Value { get; set; }
     }
 }

@@ -10,6 +10,8 @@ namespace TB_QuestGame
     {
         public override int Id { get; set; }
         public override string Description { get; set; }
+        public override int ExperiencePoints { get; set; }
+        public override int Lives { get; set; }
         public List<string> Messages { get; set; }
 
         /// <summary>

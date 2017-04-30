@@ -10,42 +10,76 @@ namespace TB_QuestGame
     {
         public static List<Npc> Npcs = new List<Npc>()
         {
-            //TODO update npc info
             
             new Guest
             {
                 Id = 1,
-                Name = "Man with Stripped Hat",
+                Name = "Juilana",
                 RoomLocationID = 2,
-                Description = "A tall man in baggy pants with a red, pin stripped hat.",
+                ExperiencePoints =100,
+                Description = "A woman with long straight red hair.",
                 Messages = new List<string>
                 {
-                    "Greetings stranger. You are not from these parts as I can see.",
-                    "You will find what you are looking for with the Pink Gorilla.",
-                    "I once attended the Academy. They felt I needed more candles."
+                    "They came from nowhere attacking everyone.",
+                    "We are all doomed..."
                 }
             },
 
             new Guest
             {
                 Id = 2,
-                Name = "Timothy Sargent",
+                Name = "Asher",
                 RoomLocationID = 1,
-                Description = "The lead developer of the Stratus Flux Capacitor.",
+                Description = "A rugged looking man with a broken leg.",
                 Messages = new List<string>
                 {
-                    "I have to go. Good bye!",
-                    "It was always meant for good. We had no idea.",
-                    "Is that man following you?"
+                    "If this leg wasn't busted I would make it out for sure!",
+                    "This thing hurts like hell.",
                 }
             },
 
             new Guest
             {
                 Id = 3,
-                Name = "Thorian Diplomat",
-                RoomLocationID = 2,
-                Description = "A Thorian diplomat dressed in traditional phlox and cords."
+                Name = "Leo",
+                RoomLocationID = 5,
+                Description = "A man with his tongue cut out. Ouch!"
+            },
+
+            new Guest
+            {
+                Id = 4,
+                Name = "Christiana",
+                RoomLocationID = 6,
+                Description = "A young woman who looks lost.",
+                Messages = new List<string>
+                {
+                    "Was I already here before?",
+                    "these floors look so similar..."
+                }
+            },
+
+            new Guest
+            {
+                Id = 5,
+                Name = "Beatrix",
+                RoomLocationID = 4,
+                Description = "A woman arguing with her spouse.",
+                Messages = new List<string>
+                {
+                    "Can't you see that I cannot talk to you right now."
+                }
+            },
+            new Guest
+            {
+                Id = 6,
+                Name = "Tim",
+                RoomLocationID = 4,
+                Description = "A man arguing with his spouse.",
+                Messages = new List<string>
+                {
+                    "Leave me alone."
+                }
             }
         };
     }
